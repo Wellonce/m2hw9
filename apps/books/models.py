@@ -25,6 +25,7 @@ class Book(AbstractModel):
     authors = ManyToManyField("books.BookAuthor", "books")
 
 
+
 class BookAuthor(AbstractModel):
     first_name = CharField(max_length=56)
     last_name = CharField(max_length=56)
@@ -34,9 +35,15 @@ class BookAuthor(AbstractModel):
     about = TextField()
     email = EmailField(unique=True)
 
+    def __str__(self):
+        return f"{self.first_name}, {self.last_name}"
+
 
 class BookGenre(AbstractModel):
     name = CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
 
 
 class BookReview(AbstractModel):

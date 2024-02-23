@@ -9,3 +9,9 @@ from apps.users.tasks import send_email
 def send_email_user(sender, instance, created, **kwargs):
     if created:
         send_email.delay("Welcome to goodreads site", "We are happy to see you here", [instance.email])
+
+@receiver(post_save, sender=User)
+def send_message(sender, instance, created, review, **kwargs):
+    if created:
+        send_email.delay([review.body], [review.rating], [instance.email])
+

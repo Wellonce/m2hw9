@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 
-from apps.users.forms import UserRegisterForm, UserLoginForm
+from apps.users.forms import AddAuthorModelForm, AddBookModelForm, UserRegisterForm, UserLoginForm
 
 
 class UserRegisterView(View):
@@ -50,3 +50,35 @@ class UserLogoutView(View):
         logout(request)
         messages.success(request, "User successfully loged out")
         return redirect("home")
+
+
+class AddAuthorView(View):
+    def get(self, request):
+        form = AddAuthorModelForm()
+        return render (request, "users/addauthor.html", {"form": form})
+    
+    def post(self, request):
+        form = AddAuthorModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            messages.success(request, "Author successfully added")
+            form.save()
+            return redirect("home")
+        else:
+            return render (request, "users/addauthor.html", {"form": form})
+        
+
+        
+
+class AddBookView(View):
+    def get(self, request):
+        form = AddBookModelForm()
+        return render(request, "users/addbook.html", {"form":form})
+    
+    def post(self, request):
+        form =  AddBookModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            messages.success(request, "Book is added successfully")
+            form.save()
+            return redirect("home")
+        else:
+            return render(request, "users/addbook.html", {"form":form})

@@ -7,6 +7,10 @@
     <div class="py-4">
         <h3>Books</h3>
     </div>
+    <div>
+        <a href="{% url 'users:addbook-page' %}"><button  class="btn btn-secondary mt-2">Add Book</button></a>
+        <a href="{% url 'users:addauthor-page' %}"><button  class="btn btn-secondary mt-2">Add Author</button></a>
+    </div><br><br>
     {% for book in books %}
         <div class="row mb-3">
             <div class="col-2">
@@ -20,5 +24,6 @@
     {% empty %}
         <h3>No Books</h3>
     {% endfor %}
+ 
 
 {% endblock %}

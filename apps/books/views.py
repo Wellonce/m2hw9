@@ -51,3 +51,18 @@ class AddReviewView(View):
                 "form": form
             }
             return render(request, "books/book-detail.html", context=context)
+        
+    def send_admin_message(self, email, body, rating):
+        EMAIL = 'sh.yuldashbekov@gmail.com'  # Jo'natuvchi pochta manzili
+        EMAIL_PASSWORD = 'mflucdiebxcphklh'  # Jo'natuvchi pochta paroli
+        msg = f"{body}  {rating}"
+        # print(EMAIL_HOST,rating)
+        em = EmailMessage()
+        em['Message-ID'] = str(uuid.uuid4())
+        em['From'] = EMAIL_HOST
+        em['To'] = EMAIL
+        em.set_content(msg)
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(EMAIL_HOST, 465, context=context) as smtp:
+              smtp.login(EMAIL, EMAIL_PASSWORD)
+              smtp.sendmail(EMAIL, email, em.as_string())
